@@ -21,7 +21,7 @@ Here are the images I provide from this repository:
 - jgoerzen/debian-base-standard - everything above, plus:
   - Utilities: less, nano, vim-tiny
   - Email: exim4-daemon-light, mailx
-  - Network: netcat-openbsd, socat, openssl, ssh
+  - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
 - jgoerzen/debian-base-security - everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
