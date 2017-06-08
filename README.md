@@ -21,7 +21,7 @@ Here are the images I provide from this repository:
   - Provides working sysvinit, syslogd, cron and at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
 - jgoerzen/debian-base-standard - everything above, plus:
-  - Utilities: less, nano, vim-tiny
+  - Utilities: less, nano, vim-tiny, man-db (for viewing manpages)
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
 - jgoerzen/debian-base-security - everything above, plus:
