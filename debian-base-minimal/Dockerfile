@@ -14,5 +14,5 @@ COPY syslog.conf /etc/syslog.conf
 COPY scripts /usr/local/bin
 RUN /usr/local/bin/docker-wipelogs
 
-CMD ["/sbin/init"]
+CMD ["/usr/local/bin/boot-sysvinit"]
 
