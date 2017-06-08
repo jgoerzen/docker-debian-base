@@ -1,25 +1,44 @@
 # Debian Working System for Docker
 
 This is a simple set of images that transform the standard Docker
-Debian environment into one that 
+Debian environment into one that provides more traditional full
+Unix APIs (including syslog, zombie process collection, etc.)
 
-This simple image installs supervisor, so you can plonk down your
-processes in /etc/supervisor/conf.d.  It also installs a syslog
-process that logs to stdout, effectively sending syslog to the Docker
-logging system.  At boot, it clears /tmp for you as well.
+It is based on the concepts, but not the code, in the
+[phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
+You can look at that link for the reason this is necessary.
+
+This image uses sysvinit instead of systemd, not because of any
+particular opinion on the merits of them, but rather because
+sysvinit does not require any kind of privileged Docker
+or cgroups access.  
+
+Here are the images I provide from this repository:
+
+- jgoerzen/debian-base-minimal
+  - Provides working sysvinit, syslogd, cron and at, and logrotate.
+  - syslogd is configured to output to the docker log system by default.
+- jgoerzen/debian-base-standard - everything above, plus:
+  - less, nano, vim-tiny, exim4-daemon-light
+- jgoerzen/debian-base-security - everything above, plus:
+  - automated security patches using unattended-upgrades and needrestart
+  - debian-security-support
+  - debsecan installed
 
 # Install
 
 You can install with:
 
-    docker pull jgoerzen/supervisor
+    docker pull jgoerzen/debian-base-whatever
 
-Your Dockerfile should use CMD to run `/usr/local/bin/boot-supervisord`.
+Your Dockerfile should use CMD to run `/usr/local/bin/boot-debian-base`.
+
+When running, use `-t` to enable the logging to `docker logs`
 
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
-can be found at https://github.com/jgoerzen/docker-supervisor
+can be found at https://github.com/jgoerzen/docker-debian-base
 
 # Copyright
 
