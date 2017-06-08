@@ -1,8 +1,8 @@
-FROM jgoerzen/debian-base-apache
+FROM jgoerzen/debian-base-apache:jessie
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install libapache2-mod-php && \
+    apt-get -y --no-install-recommends install libapache2-mod-php5 && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN /usr/local/bin/docker-wipelogs
