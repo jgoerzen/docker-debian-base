@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN /usr/local/bin/docker-wipelogs
+RUN rm -v /etc/ssh/*key*
 
 CMD ["/usr/local/bin/boot-debian-base"]
 
