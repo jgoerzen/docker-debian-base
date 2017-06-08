@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+set -x
+echo "Cleaning up; ignore errors here:"
+/etc/init.d/checkroot-bootclean.sh || true
+rm -f /tmp/.clean || true
+echo "Starting sysvinit"
+exec /sbin/init 100>&1 1>&-
+
