@@ -4,6 +4,8 @@ This is a simple set of images that transform the standard Docker
 Debian environment into one that provides more traditional full
 Unix APIs (including syslog, zombie process collection, etc.)
 
+Despite this, they are all very small, both in terms of disk and RAM usage.
+
 It is based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
 You can look at that link for the reason this is necessary.
@@ -39,8 +41,21 @@ When running, use `-t` to enable the logging to `docker logs`
 
 # Configuration
 
+Althoth the standard and security images run the SMTP and SSH servers,
+they do not expose these to the Internet by default.  Both require
+site-specific configuration before they are actually useful.
+
+## Email
+
 email is the main thing you'd need to configure.  In the running system,
 `dpkg-reconfigure -plow exim4-config` will let you do this.
+
+## SSH
+
+If you wnat to run an ssh server, you can run
+`dpkg-reconfigure openssh-server` to generate the server keys.  The
+default image does not ship server keys.
+
 
 # Source
 
