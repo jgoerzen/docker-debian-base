@@ -10,6 +10,9 @@ It is based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
 You can look at that link for the reason this is necessary.
 
+You can find the source and documentation at the [Github page](https://github.com/jgoerzen/docker-debian-base)
+and automatic builds are available from [my Docker hub page](https://hub.docker.com/jgoerzen/).
+
 This image uses sysvinit instead of systemd, not because of any
 particular opinion on the merits of them, but rather because
 sysvinit does not require any kind of privileged Docker
@@ -29,11 +32,13 @@ Here are the images I provide from this repository:
   - debian-security-support
   - debsecan installed
 
-Memory usage at boot (overhead):
+Memory usage at boot (stretch):
 
 - jgoerzen/debian-bas-eminimal: 6MB
 - jgoerzen/debian-base-standard: 11MB
 - jgoerzen/debian-base-security: 11MB
+
+These images are autobuilt for jessie, stretch, and sid.
 
 # Install
 
