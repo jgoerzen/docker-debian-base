@@ -33,7 +33,8 @@ Here are the images I provide from this repository:
   - debsecan installed
 - jgoerzen/debian-base-apache - everything above, plus:
   - apache2 plus utilities: ssl-cert, certbot, python-certbot-apache
-
+- jgoerzen/debian-base-apache-php - everything above, plus:
+  - libapache2-mod-php (mod-php5 on jessie)
 
 Memory usage at boot (stretch):
 
