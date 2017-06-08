@@ -1,4 +1,7 @@
-# Supervisor for Docker
+# Debian Working System for Docker
+
+This is a simple set of images that transform the standard Docker
+Debian environment into one that 
 
 This simple image installs supervisor, so you can plonk down your
 processes in /etc/supervisor/conf.d.  It also installs a syslog
