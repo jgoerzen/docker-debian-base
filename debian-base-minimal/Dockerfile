@@ -13,6 +13,8 @@ RUN apt-get update && \
 COPY syslog.conf /etc/syslog.conf
 COPY scripts /usr/local/bin
 RUN /usr/local/bin/docker-wipelogs
+# Don't spawn getty
+RUN sed -i 's/^\([^#].*getty\)/#\1/' /etc/inittab
 
 CMD ["/usr/local/bin/boot-debian-base"]
 
