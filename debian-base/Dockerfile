@@ -7,7 +7,8 @@ RUN apt-get update && \
     apt-get -y -u dist-upgrade && \
     apt-get -y --no-install-recommends install sysvinit-core inetutils-syslogd cron at logrotate && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-COPY scripts/ /usr/local/bin/
+RUN apt-get -y remove --purge --auto-remove systemd
+RUN echo -e 'Package: *systemd*\nPin: release *\nPin-Priority: -1\n' > /etc/apt/preferences.d/systemd
 COPY syslog.conf /etc/syslog.conf
 
 CMD ["/sbin/init"]
