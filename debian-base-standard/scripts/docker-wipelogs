@@ -1,9 +1,0 @@
-#!/bin/bash
-set -e
-
-wipefile () {
-  if [ -e "$1" ]; then cat /dev/null > "$1"; fi
-}
-
-wipefile /var/log/dpkg.log
-
