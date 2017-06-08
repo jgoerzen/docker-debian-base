@@ -31,6 +31,9 @@ Here are the images I provide from this repository:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
   - debsecan installed
+- jgoerzen/debian-base-apache - everything above, plus:
+  - apache2 plus utilities: ssl-cert, certbot, python-certbot-apache
+
 
 Memory usage at boot (stretch):
 
