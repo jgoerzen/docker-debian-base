@@ -10,5 +10,5 @@ RUN apt-get update && \
 COPY scripts/ /usr/local/bin/
 COPY syslog.conf /etc/syslog.conf
 
-CMD ["/usr/local/bin/boot-supervisord"]
+CMD ["/sbin/init"]
 
