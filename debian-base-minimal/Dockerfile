@@ -5,7 +5,7 @@ MAINTAINER John Goerzen <jgoerzen@complete.org>
 # Concepts from https://github.com/phusion/baseimage-docker
 COPY systemd /etc/apt/preferences.d/systemd
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install sysvinit-core inetutils-syslogd cron at logrotate && \
+    apt-get -y --no-install-recommends install sysvinit-core inetutils-syslogd cron anacron at logrotate && \
     apt-get -y --no-install-recommends install psmisc procps && \
     apt-get -y remove --purge --auto-remove systemd && \
     apt-get -y -u dist-upgrade && \

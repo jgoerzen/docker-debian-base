@@ -18,7 +18,7 @@ or cgroups access.
 Here are the images I provide from this repository:
 
 - jgoerzen/debian-base-minimal
-  - Provides working sysvinit, syslogd, cron and at, and logrotate.
+  - Provides working sysvinit, syslogd, cron, anacron, at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
 - jgoerzen/debian-base-standard - everything above, plus:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages)
@@ -28,6 +28,12 @@ Here are the images I provide from this repository:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
   - debsecan installed
+
+Memory usage at boot (overhead):
+
+- jgoerzen/debian-bas-eminimal: 6MB
+- jgoerzen/debian-base-standard: 11MB
+- jgoerzen/debian-base-security: 11MB
 
 # Install
 
