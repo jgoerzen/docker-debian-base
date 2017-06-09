@@ -33,8 +33,7 @@ Here are the images I provide from this repository:
   - debsecan installed
 - jgoerzen/debian-base-apache - everything above, plus:
   - apache2 plus utilities: ssl-cert
-  - LetsEncrypt options: certbot, python-certbot-apache, dehydrated, dehydrated-apache2,
-    acme-tiny, acmetool, letsencrypt.sh, letsencrypt.sh-apache2
+  - LetsEncrypt options: certbot, acme-tiny
 - jgoerzen/debian-base-apache-php - everything above, plus:
   - libapache2-mod-php (mod-php5 on jessie)
 
