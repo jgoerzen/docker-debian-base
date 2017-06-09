@@ -10,7 +10,7 @@ RUN apt-get update && \
 RUN /usr/local/bin/docker-wipelogs
 RUN rm -v /etc/ssh/*key*
 RUN mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled
-
+RUN ln -s /usr/bin/vim.tiny /usr/local/bin/vim
 
 CMD ["/usr/local/bin/boot-debian-base"]
 
