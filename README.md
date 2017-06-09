@@ -67,6 +67,27 @@ This environment variable is available for your use:
    `dpkg-divert` is used to force all packages' attempts to write to `/etc/syslog.conf`
    to instead write to `/etc/syslog.conf.internal`.
 
+# Orderly Shutdown
+
+By default, `docker stop` sends the SIGTERM (and, later, SIGKILL) signal to PID
+1 (init) iniside a container.  sysvinit does not act upon this signal.
+This will shut down a container, but it will not give your shutdown scripts
+the chance to run gracefully.  In many situations, this is fine, but it may
+not be so in all.
+
+A workaround is, howerver, readily available, without modifying init.  These
+images are configured to perform a graceful shutdown upon receiving `SIGPWR`.
+
+Here, then, is a graceful way to shut down one of these images:
+
+    docker kill -s SIGPWR container
+    sleep 10
+    docker kill container
+
+Unfortunately, PID 1 cannot be directly killed within the container, so
+after the initial application of SIGPWR, the container will essentially be
+up but useless.
+
 # Configuration
 
 Althoth the standard and security images run the SMTP and SSH servers,
