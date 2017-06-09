@@ -2,9 +2,10 @@
 set -e
 
 wipefile () {
-  if [ -e "$1" ]; then cat /dev/null > "$1"; fi
+  if [ -f "$1" ]; then cat /dev/null > "$1"; fi
 }
 
 wipefile /var/log/dmesg
+wipefile /var/log/exim4/paniclog
 rm -f /var/log/dmesg.*
 
