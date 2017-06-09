@@ -30,7 +30,6 @@ Here are the images I provide from this repository:
 - jgoerzen/debian-base-security - everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
-  - debsecan installed
 - jgoerzen/debian-base-apache - everything above, plus:
   - apache2 plus utilities: ssl-cert
   - LetsEncrypt options: certbot, acme-tiny
