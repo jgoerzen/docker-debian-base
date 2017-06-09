@@ -10,10 +10,12 @@ RUN apt-get update && \
     apt-get -y remove --purge --auto-remove systemd && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-COPY syslog.conf /etc/syslog.conf
+RUN dpkg-divert --local --divert /etc/syslog.conf.internal --rename /etc/syslog.conf
+COPY syslog.conf /etc/syslog.conf.stdout
 COPY scripts /usr/local/bin
 RUN /usr/local/bin/docker-wipelogs
 # Don't spawn getty
+RUN cp -a /etc/inittab /etc/inittab.orig
 RUN sed -i 's/^\([^#].*getty\)/#\1/' /etc/inittab
 # Let daemons start
 RUN mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled
