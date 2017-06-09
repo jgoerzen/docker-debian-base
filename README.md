@@ -80,10 +80,11 @@ email is the main thing you'd need to configure.  In the running system,
 
 ## SSH
 
-If you wnat to run an ssh server, you can run
-`dpkg-reconfigure openssh-server` to generate the server keys.  The
-default image does not ship server keys.
-
+SSH host keys will be generated upon first run of a container, if
+they do not already exist.  This implies every instantiation
+of a container containing SSH will have a new random host key.
+If you want to override this, you can of course supply your own
+files in /etc/ssh or make it a volume.
 
 # Source
 
