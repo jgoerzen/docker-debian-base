@@ -2,7 +2,7 @@ FROM jgoerzen/debian-base-standard:jessie
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install unattended-upgrades needrestart debian-security-support debsecan && \
+    apt-get -y --no-install-recommends install unattended-upgrades needrestart debian-security-support && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN /usr/local/bin/docker-wipelogs
