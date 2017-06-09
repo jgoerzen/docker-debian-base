@@ -6,9 +6,11 @@ Unix APIs (including syslog, zombie process collection, etc.)
 
 Despite this, they are all very small, both in terms of disk and RAM usage.
 
-It is based on the concepts, but not the code, in the
+You can find a [description of the motivation for these images](http://changelog.complete.org/archives/9794-fixing-the-problems-with-docker-images) on my blog.
+
+This is loosely based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
-You can look at that link for the reason this is necessary.
+You can look at that link for additional discussion on the motivations.
 
 You can find the source and documentation at the [Github page](https://github.com/jgoerzen/docker-debian-base)
 and automatic builds are available from [my Docker hub page](https://hub.docker.com/jgoerzen/).
