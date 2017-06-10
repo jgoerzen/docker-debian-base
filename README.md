@@ -91,6 +91,8 @@ If you don't start it this way, you can instead use these steps:
     sleep 10
     docker kill container
 
+Within the container, you can call `telinit 1` to cause the container to shutdown.
+
 ## Orderly Shutdown Mechanics
 
 By default, `docker stop` sends the SIGTERM (and, later, SIGKILL) signal to PID
