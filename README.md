@@ -135,6 +135,14 @@ of a container containing SSH will have a new random host key.
 If you want to override this, you can of course supply your own
 files in /etc/ssh or make it a volume.
 
+# Docker Tags
+
+These tags are pushed:
+
+ - latest, stretch: Debian stretch
+ - jessie: Debian jessie
+ - sid: Debian sid (not tested)
+
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
