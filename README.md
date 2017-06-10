@@ -80,6 +80,19 @@ once can delete itself after a successful run to prevent a future execution.
 
 # Orderly Shutdown
 
+You can cause `docker stop` to invoke an orderly shutdown by running the container
+like this:
+
+    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
+
+If you don't start it this way, you can instead use these steps:
+
+    docker kill -s SIGPWR container
+    sleep 10
+    docker kill container
+
+## Orderly Shutdown Mechanics
+
 By default, `docker stop` sends the SIGTERM (and, later, SIGKILL) signal to PID
 1 (init) iniside a container.  sysvinit does not act upon this signal.
 This will shut down a container, but it will not give your shutdown scripts
@@ -89,15 +102,17 @@ not be so in all.
 A workaround is, howerver, readily available, without modifying init.  These
 images are configured to perform a graceful shutdown upon receiving `SIGPWR`.
 
-Here, then, is a graceful way to shut down one of these images:
+The process for this is... interesting, since we are unable to directly
+kill PID 1 inside a docker container.  First, init calls `/etc/init.d/powerfail`.
+The powerfail script I install simply tells init to go to single-user mode.
+This causes it to perform an orderly shutdown of the daemons, and when it is
+done, it invokes `/sbin/sulogin`.  On an ordinary system, this prompts for
+the root password for single-user mode.  In this environment, we instead
+symlink /sbin/init to /bin/true, then tell init to re-exec itself.  This
+causes PID 1 to finally exit.
 
-    docker kill -s SIGPWR container
-    sleep 10
-    docker kill container
-
-Unfortunately, PID 1 cannot be directly killed within the container, so
-after the initial application of SIGPWR, the container will essentially be
-up but useless.
+One of the preinit scripts makes sure that `/sbin/init` properly links to
+`/sbin/init.real` at boot time.
 
 # Configuration
 

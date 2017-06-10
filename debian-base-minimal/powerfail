@@ -1,3 +1,5 @@
 #!/usr/bin/bash
-poweroff
+set -e
+
+telinit 1
 

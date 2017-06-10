@@ -10,11 +10,17 @@ RUN apt-get update && \
     apt-get -y remove --purge --auto-remove systemd && \
     apt-get -y -u dist-upgrade && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN dpkg-divert --local --divert /etc/syslog.conf.internal --rename /etc/syslog.conf
+#
+# Rename /sbin/init so we can use telinit to restart the thing.
+#
+RUN dpkg-divert --local --divert /etc/syslog.conf.internal --rename /etc/syslog.conf && \
+    dpkg-divert --local --divert /sbin/init.real --rename /sbin/init && \
+    dpkg-divert --local --divert /sbin/sulogin.real --rename /sbin/sulogin
 COPY syslog.conf /etc/syslog.conf.stdout
 COPY scripts /usr/local/bin
 COPY preinit /usr/local/preinit
 COPY powerfail /etc/init.d/powerfail
+COPY sulogin /sbin/sulogin
 RUN /usr/local/bin/docker-wipelogs
 # Don't spawn getty
 RUN cp -a /etc/inittab /etc/inittab.orig && \
