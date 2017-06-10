@@ -6,9 +6,11 @@ Unix APIs (including syslog, zombie process collection, etc.)
 
 Despite this, they are all very small, both in terms of disk and RAM usage.
 
-It is based on the concepts, but not the code, in the
+You can find a [description of the motivation for these images](http://changelog.complete.org/archives/9794-fixing-the-problems-with-docker-images) on my blog.
+
+This is loosely based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
-You can look at that link for the reason this is necessary.
+You can look at that link for additional discussion on the motivations.
 
 You can find the source and documentation at the [Github page](https://github.com/jgoerzen/docker-debian-base)
 and automatic builds are available from [my Docker hub page](https://hub.docker.com/jgoerzen/).
@@ -66,6 +68,15 @@ This environment variable is available for your use:
    `syslog.conf.stdout`.  `syslog.conf.internal` is the default from the system.
    `dpkg-divert` is used to force all packages' attempts to write to `/etc/syslog.conf`
    to instead write to `/etc/syslog.conf.internal`.
+- `DEBBASE_TIMEZONE`, if set, will configure the `/etc/timezone` and `/etc/localtime`
+  files in the container to the appropriate timezone.
+
+# Container initialization
+
+Executables or scripts may be placed in `/usr/local/bin/preinit`, which will be executed
+at container start time by `run-parts` prior to starting init.  These can
+therefore perform container startup steps.  A script which needs to only run
+once can delete itself after a successful run to prevent a future execution.
 
 # Orderly Shutdown
 
