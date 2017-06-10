@@ -13,11 +13,12 @@ RUN apt-get update && \
 RUN dpkg-divert --local --divert /etc/syslog.conf.internal --rename /etc/syslog.conf
 COPY syslog.conf /etc/syslog.conf.stdout
 COPY scripts /usr/local/bin
+COPY preinit /usr/local/preinit
 COPY powerfail /etc/init.d/powerfail
 RUN /usr/local/bin/docker-wipelogs
 # Don't spawn getty
-RUN cp -a /etc/inittab /etc/inittab.orig
-RUN sed -i 's/^\([^#].*getty\)/#\1/' /etc/inittab
+RUN cp -a /etc/inittab /etc/inittab.orig && \
+    sed -i 's/^\([^#].*getty\)/#\1/' /etc/inittab
 # Let daemons start
 RUN mv /usr/sbin/policy-rc.d /usr/sbin/policy-rc.d.disabled
 
