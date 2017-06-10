@@ -16,6 +16,17 @@ RUN apt-get update && \
 RUN dpkg-divert --local --divert /etc/syslog.conf.internal --rename /etc/syslog.conf && \
     dpkg-divert --local --divert /sbin/init.real --rename /sbin/init && \
     dpkg-divert --local --divert /sbin/sulogin.real --rename /sbin/sulogin
+
+# Disable some init scripts that aren't relevant in Docker.
+
+RUN for DAEMON in hwclock.sh mountall-bootclean.sh mountall.sh \
+        checkroot-bootclean.sh checkfs.sh checkroot.sh motd bootlogs \
+        mountdevsubfs.sh procps \
+        hostname.sh mountkernfs.sh \
+        checkfs.sh mountalol.sh urandom \
+        mountnfs-bootclean.sh mountnfs.sh umountnfs.sh umountfs umountroot; do \
+        update-rc.d -f $DAEMON remove || true; done
+
 COPY syslog.conf /etc/syslog.conf.stdout
 COPY scripts /usr/local/bin
 COPY preinit /usr/local/preinit
