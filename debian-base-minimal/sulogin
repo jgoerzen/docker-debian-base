@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 set -e
 
 # We can't kill init, but we can make it re-exec itself (/bin/true)
