@@ -73,7 +73,7 @@ This environment variable is available for your use:
 
 # Container initialization
 
-Executables or scripts may be placed in `/usr/local/bin/preinit`, which will be executed
+Executables or scripts may be placed in `/usr/local/preinit`, which will be executed
 at container start time by `run-parts` prior to starting init.  These can
 therefore perform container startup steps.  A script which needs to only run
 once can delete itself after a successful run to prevent a future execution.
