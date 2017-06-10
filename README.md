@@ -68,6 +68,15 @@ This environment variable is available for your use:
    `syslog.conf.stdout`.  `syslog.conf.internal` is the default from the system.
    `dpkg-divert` is used to force all packages' attempts to write to `/etc/syslog.conf`
    to instead write to `/etc/syslog.conf.internal`.
+- `DEBBASE_TIMEZONE`, if set, will configure the `/etc/timezone` and `/etc/localtime`
+  files in the container to the appropriate timezone.
+
+# Container initialization
+
+Executables or scripts may be placed in `/usr/local/bin/preinit`, which will be executed
+at container start time by `run-parts` prior to starting init.  These can
+therefore perform container startup steps.  A script which needs to only run
+once can delete itself after a successful run to prevent a future execution.
 
 # Orderly Shutdown
 

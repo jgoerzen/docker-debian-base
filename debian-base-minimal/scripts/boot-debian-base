@@ -1,23 +1,8 @@
 #!/bin/bash
 
 set -e
-set -x
-echo "Cleaning up; ignore errors here:"
-/etc/init.d/checkroot-bootclean.sh || true
-rm -f /tmp/.clean || true
-if [ "$DEBBASE_SYSLOG" = "internal" ]; then
-        ln -sf syslog.conf.internal /etc/syslog.conf
-else
-        ln -sf syslog.conf.stdout /etc/syslog.conf
-fi
+run-parts --verbose /usr/local/bin/preinit
 
-
-# SSH
-
-if [ -d /etc/ssh -a -f /etc/ssh/sshd_config -a ! -f /etc/ssh/ssh_host_rsa_key ]; then
-        echo "Generating SSH host keys..."
-        dpkg-reconfigure openssh-server || true
-fi
 echo "Starting sysvinit"
 exec /sbin/init 100>&1 1>&-
 
