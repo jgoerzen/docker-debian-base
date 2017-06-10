@@ -26,7 +26,7 @@ Here are the images I provide from this repository:
   - Provides working sysvinit, syslogd, cron, anacron, at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
 - jgoerzen/debian-base-standard - everything above, plus:
-  - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools
+  - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
 - jgoerzen/debian-base-security - everything above, plus:
@@ -134,6 +134,14 @@ they do not already exist.  This implies every instantiation
 of a container containing SSH will have a new random host key.
 If you want to override this, you can of course supply your own
 files in /etc/ssh or make it a volume.
+
+# Docker Tags
+
+These tags are pushed:
+
+ - latest, stretch: Debian stretch
+ - jessie: Debian jessie
+ - sid: Debian sid (not tested)
 
 # Source
 
