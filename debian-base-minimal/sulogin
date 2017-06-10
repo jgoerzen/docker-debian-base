@@ -5,5 +5,6 @@ set -e
 ln -sf /bin/true /sbin/init
 # Since telinit is linked to /sbin/init, we have to call init.real instead
 # of telinit here.
+echo "Container exiting; stopping init."
 /sbin/init.real U
 
