@@ -6,3 +6,12 @@ if [ -d /etc/ssh -a -f /etc/ssh/sshd_config -a ! -f /etc/ssh/ssh_host_rsa_key ];
         dpkg-reconfigure openssh-server || true
 fi
 
+if [ "$DEBBASE_SSH" = "enabled" ]; then
+        echo "SSH server enabled; unset DEBBASE_SSH to disable"
+        update-rc.d ssh enable
+else
+        echo "SSH server disabled; set DEBBASE_SSH=enabled to enable"
+        update-rc.d ssh disable &> /dev/null
+fi
+
+
