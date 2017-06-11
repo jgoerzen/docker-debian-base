@@ -1,4 +1,4 @@
-FROM jgoerzen/debian-base-security
+FROM jgoerzen/debian-base-security:jessie
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 RUN mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 RUN apt-get update && \
