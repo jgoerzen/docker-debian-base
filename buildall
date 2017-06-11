@@ -4,7 +4,7 @@ set -x
 
 buildbranch() {
         git checkout $1
-        for DIR in debian-base-{minimal,standard,security,apache,apache-php}; do
+        for DIR in debian-base-{minimal,standard,security,vnc,apache,apache-php}; do
                 cd $DIR
                 docker build -t jgoerzen/$DIR:$2 .
                 cd ..

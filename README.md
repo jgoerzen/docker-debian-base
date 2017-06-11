@@ -22,20 +22,22 @@ or cgroups access.
 
 Here are the images I provide from this repository:
 
-- jgoerzen/debian-base-minimal
+- jgoerzen/debian-base-minimal - a minimalistic base for you.
   - Provides working sysvinit, syslogd, cron, anacron, at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
-- jgoerzen/debian-base-standard - everything above, plus:
+- jgoerzen/debian-base-standard - adds some utilities.  Containes everything above, plus:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
-- jgoerzen/debian-base-security - everything above, plus:
+- jgoerzen/debian-base-security - A great way to keep thins updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
-- jgoerzen/debian-base-apache - everything above, plus:
+- jgoerzen/debian-vnc - For systems that need X.  debian-base-security, plus:
+  - tightvncserver, xfonts-base, lwm, xterm, xdotool, xvnc4viewer
+- jgoerzen/debian-base-apache - A web server - debian-base-security, plus:
   - apache2 plus utilities: ssl-cert
   - LetsEncrypt options: certbot, acme-tiny
-- jgoerzen/debian-base-apache-php - everything above, plus:
+- jgoerzen/debian-base-apache-php - debian-base-apache, plus:
   - libapache2-mod-php (mod-php5 on jessie)
 
 Memory usage at boot (stretch):
@@ -70,6 +72,8 @@ This environment variable is available for your use:
    to instead write to `/etc/syslog.conf.internal`.
 - `DEBBASE_TIMEZONE`, if set, will configure the `/etc/timezone` and `/etc/localtime`
   files in the container to the appropriate timezone.
+- `DEBBASE_SSH` defaults to `disabled`.  If you set to `enabled`, then the SSH server
+  will be run.
 
 # Container initialization
 
@@ -121,6 +125,18 @@ One of the preinit scripts makes sure that `/sbin/init` properly links to
 Althoth the standard and security images run the SMTP and SSH servers,
 they do not expose these to the Internet by default.  Both require
 site-specific configuration before they are actually useful.
+
+Because the SMTP service is used inside containers, but the SSH service
+generally is not, the SSH service is disabled by default.
+
+
+
+## Enabling or Disabling Services
+
+You can enable or disable services using commands like this:
+
+   update-rc.d ssh disable 
+   update-rc.d ssh enable
 
 ## Email
 
