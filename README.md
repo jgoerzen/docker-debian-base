@@ -13,7 +13,7 @@ This is loosely based on the concepts, but not the code, in the
 You can look at that link for additional discussion on the motivations.
 
 You can find the source and documentation at the [Github page](https://github.com/jgoerzen/docker-debian-base)
-and automatic builds are available from [my Docker hub page](https://hub.docker.com/jgoerzen/).
+and automatic builds are available from [my Docker hub page](https://hub.docker.com/u/jgoerzen/).
 
 This image uses sysvinit instead of systemd, not because of any
 particular opinion on the merits of them, but rather because
@@ -122,7 +122,7 @@ One of the preinit scripts makes sure that `/sbin/init` properly links to
 
 # Configuration
 
-Althoth the standard and security images run the SMTP and SSH servers,
+Although the standard and security images run the SMTP and SSH servers,
 they do not expose these to the Internet by default.  Both require
 site-specific configuration before they are actually useful.
 
