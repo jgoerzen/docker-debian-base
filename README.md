@@ -97,7 +97,7 @@ If you don't start it this way, you can instead use these steps:
 
 Within the container, you can call `telinit 1` to cause the container to shutdown.
 
-## Orderly Shutdown Mechanics
+## Advanted topic: Orderly Shutdown Mechanics
 
 By default, `docker stop` sends the SIGTERM (and, later, SIGKILL) signal to PID
 1 (init) iniside a container.  sysvinit does not act upon this signal.
@@ -129,8 +129,6 @@ site-specific configuration before they are actually useful.
 Because the SMTP service is used inside containers, but the SSH service
 generally is not, the SSH service is disabled by default.
 
-
-
 ## Enabling or Disabling Services
 
 You can enable or disable services using commands like this:
@@ -150,6 +148,37 @@ they do not already exist.  This implies every instantiation
 of a container containing SSH will have a new random host key.
 If you want to override this, you can of course supply your own
 files in /etc/ssh or make it a volume.
+
+# Advanced topic: programs that depend on disabled scripts
+
+There are a number of scripts in `/etc/init.d` that are normally
+part of a Debian system initialization, but fail in a Docker environment.
+They do things like set up swap space, mount filesystems, etc.
+Docker images typically leave those scripts in place, but they are
+never called because Docker systems typically don't run a real init
+like these images do.
+
+Although calling the scripts produces nothing worse than harmless errors, I have
+disabled those scripts in these images in order to avoid putting useless
+error messages in people's log files.  In some very rare circumstances,
+this may cause installation of additional packages to fail due to
+boot script dependency ordering not working right.  (Again, this is very
+rare).
+
+I saw this happen once where a package had a long chaing of dependencies
+that wound up pulling in cgmanager, which died in postinst complaining
+that its init script required `mountkernfs`.  I worked around this in my
+Dockerfile like this:
+
+    update-rc.d mountkernfs.sh defaults
+    apt-get -y --no-install-recommends offending-package
+    update-rc.d -f cgmanager remove
+    update-rc.d -f mountkernfs.sh remove
+
+Also, I have blocked systemd from accidentally being installed on the system.
+There are a few packages that pull in systemd shims and so forth, so if
+you get errors about systemd not installing, try adding
+`rm /etc/apt/preferences.d/systemd` to your Dockerfile.
 
 # Docker Tags
 
