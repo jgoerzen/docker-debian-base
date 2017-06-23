@@ -23,7 +23,7 @@ RUN for DAEMON in hwclock.sh mountall-bootclean.sh mountall.sh \
         checkroot-bootclean.sh checkfs.sh checkroot.sh motd bootlogs \
         mountdevsubfs.sh procps \
         hostname.sh mountkernfs.sh \
-        checkfs.sh mountalol.sh urandom \
+        checkfs.sh urandom \
         mountnfs-bootclean.sh mountnfs.sh umountnfs.sh umountfs umountroot; do \
         update-rc.d -f $DAEMON remove || true; done
 
