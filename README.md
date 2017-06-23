@@ -165,7 +165,7 @@ this may cause installation of additional packages to fail due to
 boot script dependency ordering not working right.  (Again, this is very
 rare).
 
-I saw this happen once where a package had a long chaing of dependencies
+I saw this happen once where a package had a long chain of dependencies
 that wound up pulling in cgmanager, which died in postinst complaining
 that its init script required `mountkernfs`.  I worked around this in my
 Dockerfile like this:
