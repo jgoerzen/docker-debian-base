@@ -32,7 +32,7 @@ Here are the images I provide from this repository:
 - jgoerzen/debian-base-security - A great way to keep thins updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
-- jgoerzen/debian-vnc - For systems that need X.  debian-base-security, plus:
+- jgoerzen/debian-base-vnc - For systems that need X.  debian-base-security, plus:
   - tightvncserver, xfonts-base, lwm, xterm, xdotool, xvnc4viewer
 - jgoerzen/debian-base-apache - A web server - debian-base-security, plus:
   - apache2 plus utilities: ssl-cert
@@ -42,7 +42,7 @@ Here are the images I provide from this repository:
 
 Memory usage at boot (stretch):
 
-- jgoerzen/debian-bas-eminimal: 6MB
+- jgoerzen/debian-base-minimal: 6MB
 - jgoerzen/debian-base-standard: 11MB
 - jgoerzen/debian-base-security: 11MB
 
