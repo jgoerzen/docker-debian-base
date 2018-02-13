@@ -4,16 +4,16 @@ set -e
 set -x
 
 FILESDIR="/usr/local/debian-base-setup/files"
-COPY () {
+MVFILE () {
     mv "$FILESDIR/$1" "$2"
 }
 
 # Copy files into place
 
-COPY systemd /etc/apt/preferences.d/systemd
-COPY syslog.conf /etc/syslog.conf.stdout
-COPY powerfail /etc/init.d/powerfail
-COPY sulogin /sbin/sulogin
+MVFILE systemd /etc/apt/preferences.d/systemd
+MVFILE syslog.conf /etc/syslog.conf.stdout
+MVFILE powerfail /etc/init.d/powerfail
+MVFILE sulogin /sbin/sulogin
 
 apt-get update
 apt-get -y --no-install-recommends install sysvinit-core inetutils-syslogd cron anacron at logrotate
