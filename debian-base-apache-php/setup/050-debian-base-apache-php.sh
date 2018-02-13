@@ -6,7 +6,7 @@ set -x
 mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 
 apt-get update
-apt-get -y --no-install-recommends install libapache2-mod-php
+apt-get -y --no-install-recommends install libapache2-mod-php5
 apt-get -y -u dist-upgrade
 
 apt-get clean

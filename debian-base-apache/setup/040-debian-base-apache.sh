@@ -4,9 +4,11 @@ set -e
 set -x
 
 mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
+echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
 # Install python-ndg-httpsclient per #861513
 apt-get update
-apt-get -y --no-install-recommends install apache2 certbot python-certbot-apache python-ndg-httpsclient ssl-cert \
+apt-get -y --no-install-recommends install apache2 ssl-cert
+apt-get -y --no-install-recommends -t jessie-backports install certbot python-certbot-apache python-ndg-httpsclient \
              acme-tiny
 apt-get -y -u dist-upgrade
 
