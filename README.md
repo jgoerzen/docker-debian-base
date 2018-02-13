@@ -180,6 +180,39 @@ There are a few packages that pull in systemd shims and so forth, so if
 you get errors about systemd not installing, try adding
 `rm /etc/apt/preferences.d/systemd` to your Dockerfile.
 
+# Advanced Topic: Adding these enhancements to other images
+
+Sometimes, it is desirable to not have to rebuild an image entirely.
+These images are also designed to make it easy to add the
+functionality to other images.  You can do this by using the support
+for multiple FROM lines in a Dockerfile.  For instance, here's a
+simple one I worked up:
+
+    FROM jgoerzen/debian-base-security:jessie AS debian-addons
+    
+    FROM homeassistant/home-assistant:0.63.1
+
+    COPY --from=debian-addons /usr/local/preinit/ /usr/local/preinit/
+    COPY --from=debian-addons /usr/local/bin/ /usr/local/bin/
+    COPY --from=debian-addons /usr/local/debian-base-setup/ /usr/local/debian-base-setup/
+    
+    RUN run-parts --exit-on-error --verbose /usr/local/debian-base-setup
+    CMD ["/usr/local/bin/boot-debian-base"]
+
+It happens that home-assistant is based on a Python image which, in
+turn, is based on Debian jessie.  There are just those four lines that
+are needed: copying the /usr/local/preinit, bin, and debian-base-setup
+directories, and then the `run-parts` call.  This effectively adds all
+the features of debian-base-security to the home-assistant image.
+
+This works because each image that is part of the chain leading up to
+security (minimal, standard, and security) performs all of its
+activity from scripts it drops -- and leaves -- in
+/usr/local/debian-base-setup.  Those scripts need nothing other than
+the files in the three directories referenced above.  By adding those
+three directories and calling the scripts, it is easy to add these
+features to other images.
+
 # Docker Tags
 
 These tags are pushed:
