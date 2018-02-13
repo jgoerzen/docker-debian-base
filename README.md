@@ -196,7 +196,7 @@ can be found at https://github.com/jgoerzen/docker-debian-base
 # Copyright
 
 Docker scripts, etc. are
-Copyright (c) 2017 John Goerzen
+Copyright (c) 2017-2018 John Goerzen
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
