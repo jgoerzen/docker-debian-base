@@ -71,7 +71,8 @@ This environment variable is available for your use:
    `dpkg-divert` is used to force all packages' attempts to write to `/etc/syslog.conf`
    to instead write to `/etc/syslog.conf.internal`.
 - `DEBBASE_TIMEZONE`, if set, will configure the `/etc/timezone` and `/etc/localtime`
-  files in the container to the appropriate timezone.
+  files in the container to the appropriate timezone.  Set this to the desired timezone;
+  for instance, `America/Denver`.
 - `DEBBASE_SSH` defaults to `disabled`.  If you set to `enabled`, then the SSH server
   will be run.
 
