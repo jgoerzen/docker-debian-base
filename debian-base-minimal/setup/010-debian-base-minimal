@@ -15,7 +15,7 @@ COPY powerfail /etc/init.d/powerfail
 # COPY sulogin /sbin/sulogin
 
 apt-get update
-apt-get -y --no-install-recommends install inetutils-syslogd cron anacron at logrotate systemd-sysv systemd-shim
+apt-get -y --no-install-recommends install inetutils-syslogd cron anacron at logrotate systemd-sysv systemd-shim initscripts
 apt-get -y --no-install-recommends install psmisc procps
 apt-get -y -u dist-upgrade
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
