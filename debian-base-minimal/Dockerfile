@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:stretch-systemd
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 # We have to use sysvinit because Docker doesn't support cgroups.
 # See http://without-systemd.org/wiki/index.php/Debian_Stretch
