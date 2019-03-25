@@ -5,6 +5,10 @@ set -x
 
 mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
 echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
+
+# The valid-until in the archive backports InRelease is no longer being updated.
+echo 'Acquire::Check-Valid-Until "0";' > /etc/apt/apt.conf.d/10no-check-valid-until-debian-base-apache
+
 # Install python-ndg-httpsclient per #861513
 apt-get update
 update-rc.d mountkernfs.sh defaults
