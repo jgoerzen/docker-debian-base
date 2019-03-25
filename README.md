@@ -283,6 +283,7 @@ Some references to additional information:
    handling of logging, not having to re-implement init, etc.  All of
    these have already been implemented in these images with sysvinit
    and continue with systemd.
+ - [serverfault thread](https://serverfault.com/questions/607769/running-systemd-inside-a-docker-container-arch-linux)
 
 # Copyright
 
