@@ -63,6 +63,21 @@ Your Dockerfile should use CMD to run `/usr/local/bin/boot-debian-base`.
 
 When running, use `-t` to enable the logging to `docker logs`
 
+# Container Invocation
+
+A container should be started using these commands, among others.  See
+also the section on environment variables, below.
+
+## Container Invocation, sysvinit containers (jessie/stretch)
+
+    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
+
+## Container Invocation, systemd containers (buster/sid)
+
+    docker run -td --stop-signal=SIGRTMIN+3 \ 
+      -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+      --name=name jgoerzen/debian-base-whatever
+
 # Environment Variables
 
 This environment variable is available for your use:
@@ -90,19 +105,10 @@ once can delete itself after a successful run to prevent a future execution.
 
 # Orderly Shutdown
 
-You can cause `docker stop` to invoke an orderly shutdown by running the container
-like this:
+The `--stop-signal` clause in the "Container Invocation" section above
+helps achieve an orderly shutdown.
 
-
-    # jessie or stretch
-    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
-    
-    # buster or sid
-    docker run -td --stop-signal=SIGRTMIN+3 \ 
-      -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-      --name=name jgoerzen/debian-base-whatever
-
-If you don't start it this way, you can instead use these steps:
+If you start without `--stop-signal`, you can instead use these steps:
 
     # jessie or stretch use this line:
     docker kill -s SIGPWR container
@@ -139,8 +145,8 @@ password for single-user mode.  In this environment, we instead
 symlink /sbin/init to /bin/true, then tell init to re-exec itself.
 This causes PID 1 to finally exit.
 
-One of the preinit scripts makes sure that `/sbin/init` properly links to
-`/sbin/init.real` at boot time.
+With sysvinit, one of the preinit scripts makes sure that `/sbin/init`
+properly links to `/sbin/init.real` at boot time.
 
 With systemd in buster/sid, no special code for all this is needed;
 systemd handles it internally with no fuss.
@@ -242,7 +248,7 @@ the features of debian-base-security to the home-assistant image.
 This works because each image that is part of the chain leading up to
 security (minimal, standard, and security) performs all of its
 activity from scripts it drops -- and leaves -- in
-/usr/local/debian-base-setup.  Those scripts need nothing other than
+`/usr/local/debian-base-setup`.  Those scripts need nothing other than
 the files in the three directories referenced above.  By adding those
 three directories and calling the scripts, it is easy to add these
 features to other images.
