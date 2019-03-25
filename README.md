@@ -15,10 +15,16 @@ You can look at that link for additional discussion on the motivations.
 You can find the source and documentation at the [Github page](https://github.com/jgoerzen/docker-debian-base)
 and automatic builds are available from [my Docker hub page](https://hub.docker.com/u/jgoerzen/).
 
-This image uses sysvinit instead of systemd, not because of any
-particular opinion on the merits of them, but rather because
-sysvinit does not require any kind of privileged Docker
-or cgroups access.  
+For stretch and jessie, this image uses sysvinit instead of systemd,
+not because of any particular opinion on the merits of them, but
+rather because sysvinit does not require any kind of privileged Docker
+or cgroups access.
+
+For buster, systemd contains the necessary support for running in an
+unprivileged Docker container and, as it doesn't require the hacks
+that sysvinit does, is used there.  The systemd and sysvinit images
+provide an identical set of features and installed software, which
+target the standard Linux API.
 
 Here are the images I provide from this repository:
 
@@ -29,7 +35,7 @@ Here are the images I provide from this repository:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl, pwgen, zip, unzip
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
-- jgoerzen/debian-base-security - A great way to keep thins updated.  Contains everything above, plus:
+- jgoerzen/debian-base-security - A great way to keep things updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
 - jgoerzen/debian-base-vnc - For systems that need X.  debian-base-security, plus:
@@ -46,7 +52,15 @@ Memory usage at boot (stretch):
 - jgoerzen/debian-base-standard: 11MB
 - jgoerzen/debian-base-security: 11MB
 
-These images are autobuilt for jessie, stretch, and sid.
+# Docker Tags
+
+These tags are autobuilt:
+
+ - latest: whatever is stable (currently stretch, sysvinit)
+ - buster: Debian buster (systemd)
+ - stretch: Debian stretch (sysvinit)
+ - jessie: Debian jessie (sysvinit)
+ - sid: Debian sid (not tested; systemd)
 
 # Install
 
@@ -57,6 +71,21 @@ You can install with:
 Your Dockerfile should use CMD to run `/usr/local/bin/boot-debian-base`.
 
 When running, use `-t` to enable the logging to `docker logs`
+
+# Container Invocation
+
+A container should be started using these commands, among others.  See
+also the section on environment variables, below.
+
+## Container Invocation, sysvinit containers (jessie/stretch)
+
+    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
+
+## Container Invocation, systemd containers (buster/sid)
+
+    docker run -td --stop-signal=SIGRTMIN+3 \ 
+      -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+      --name=name jgoerzen/debian-base-whatever
 
 # Environment Variables
 
@@ -71,7 +100,8 @@ This environment variable is available for your use:
    `dpkg-divert` is used to force all packages' attempts to write to `/etc/syslog.conf`
    to instead write to `/etc/syslog.conf.internal`.
 - `DEBBASE_TIMEZONE`, if set, will configure the `/etc/timezone` and `/etc/localtime`
-  files in the container to the appropriate timezone.
+  files in the container to the appropriate timezone.  Set this to the desired timezone;
+  for instance, `America/Denver`.
 - `DEBBASE_SSH` defaults to `disabled`.  If you set to `enabled`, then the SSH server
   will be run.
 
@@ -84,41 +114,51 @@ once can delete itself after a successful run to prevent a future execution.
 
 # Orderly Shutdown
 
-You can cause `docker stop` to invoke an orderly shutdown by running the container
-like this:
+The `--stop-signal` clause in the "Container Invocation" section above
+helps achieve an orderly shutdown.
 
-    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
+If you start without `--stop-signal`, you can instead use these steps:
 
-If you don't start it this way, you can instead use these steps:
-
+    # jessie or stretch use this line:
     docker kill -s SIGPWR container
+    # buster or sid use this one:
+    docker kill -s SIGRTMIN+3 container
+    
+    # Either way, then proceed with:
     sleep 10
     docker kill container
 
-Within the container, you can call `telinit 1` to cause the container to shutdown.
+Within the container, you can call `telinit 1` (jessie/stretch) or
+`poweroff` (buster/sid) to cause the container to shutdown.
 
 ## Advanted topic: Orderly Shutdown Mechanics
 
-By default, `docker stop` sends the SIGTERM (and, later, SIGKILL) signal to PID
-1 (init) iniside a container.  sysvinit does not act upon this signal.
-This will shut down a container, but it will not give your shutdown scripts
-the chance to run gracefully.  In many situations, this is fine, but it may
-not be so in all.
+By default, `docker stop` sends the SIGTERM (and, later, SIGKILL)
+signal to PID 1 (init) iniside a container.  Neither sysvinit nor
+systemd act upon this signal in a useful way.  This will shut down a
+container, but it will not give your shutdown scripts the chance to
+run gracefully.  In many situations, this is fine, but it may not be
+so in all.
 
 A workaround is, howerver, readily available, without modifying init.  These
-images are configured to perform a graceful shutdown upon receiving `SIGPWR`.
+images are configured to perform a graceful shutdown upon receiving
+`SIGPWR` (jessie/stretch) or `SIGRTMIN+3` (buster/sid).
 
-The process for this is... interesting, since we are unable to directly
-kill PID 1 inside a docker container.  First, init calls `/etc/init.d/powerfail`.
-The powerfail script I install simply tells init to go to single-user mode.
-This causes it to perform an orderly shutdown of the daemons, and when it is
-done, it invokes `/sbin/sulogin`.  On an ordinary system, this prompts for
-the root password for single-user mode.  In this environment, we instead
-symlink /sbin/init to /bin/true, then tell init to re-exec itself.  This
-causes PID 1 to finally exit.
+The process for this with sysvinit is... interesting, since we are
+unable to directly kill PID 1 inside a docker container.  First, init
+calls `/etc/init.d/powerfail`.  The powerfail script I install simply
+tells init to go to single-user mode.  This causes it to perform an
+orderly shutdown of the daemons, and when it is done, it invokes
+`/sbin/sulogin`.  On an ordinary system, this prompts for the root
+password for single-user mode.  In this environment, we instead
+symlink /sbin/init to /bin/true, then tell init to re-exec itself.
+This causes PID 1 to finally exit.
 
-One of the preinit scripts makes sure that `/sbin/init` properly links to
-`/sbin/init.real` at boot time.
+With sysvinit, one of the preinit scripts makes sure that `/sbin/init`
+properly links to `/sbin/init.real` at boot time.
+
+With systemd in buster/sid, no special code for all this is needed;
+systemd handles it internally with no fuss.
 
 # Configuration
 
@@ -131,10 +171,20 @@ generally is not, the SSH service is disabled by default.
 
 ## Enabling or Disabling Services
 
-You can enable or disable services using commands like this:
+You can enable or disable services using commands like this
+(jessie/stretch):
 
-   update-rc.d ssh disable 
-   update-rc.d ssh enable
+    update-rc.d ssh disable 
+    update-rc.d ssh enable
+   
+Or this (buster/sid):
+
+    systemctl disable ssh
+    systemctl enable ssh
+
+(Note, that in the case of ssh, the environment variable will cause
+commands like this to be executed automatically on each container
+start.)
 
 ## Email
 
@@ -147,37 +197,40 @@ SSH host keys will be generated upon first run of a container, if
 they do not already exist.  This implies every instantiation
 of a container containing SSH will have a new random host key.
 If you want to override this, you can of course supply your own
-files in /etc/ssh or make it a volume.
+files in `/etc/ssh` or make it a volume.
 
-# Advanced topic: programs that depend on disabled scripts
+# Advanced topic: programs that depend on disabled scripts (stretch/jessie only)
 
-There are a number of scripts in `/etc/init.d` that are normally
-part of a Debian system initialization, but fail in a Docker environment.
-They do things like set up swap space, mount filesystems, etc.
-Docker images typically leave those scripts in place, but they are
-never called because Docker systems typically don't run a real init
-like these images do.
+**This section pertains only to stretch/jessie; systemd in buster/sid
+  does not have these issues.**
 
-Although calling the scripts produces nothing worse than harmless errors, I have
-disabled those scripts in these images in order to avoid putting useless
-error messages in people's log files.  In some very rare circumstances,
-this may cause installation of additional packages to fail due to
-boot script dependency ordering not working right.  (Again, this is very
-rare).
+There are a number of scripts in `/etc/init.d` that are normally part
+of a Debian system initialization, but fail in a Docker environment.
+They do things like set up swap space, mount filesystems, etc.  Docker
+images typically leave those scripts in place, but they are never
+called because Docker systems typically don't run a real init like
+these images do.
 
-I saw this happen once where a package had a long chain of dependencies
-that wound up pulling in cgmanager, which died in postinst complaining
-that its init script required `mountkernfs`.  I worked around this in my
-Dockerfile like this:
+Although calling the scripts produces nothing worse than harmless
+errors, I have disabled those scripts in these images in order to
+avoid putting useless error messages in people's log files.  In some
+very rare circumstances, this may cause installation of additional
+packages to fail due to boot script dependency ordering not working
+right.  (Again, this is very rare).
+
+I saw this happen once where a package had a long chain of
+dependencies that wound up pulling in cgmanager, which died in
+postinst complaining that its init script required `mountkernfs`.  I
+worked around this in my Dockerfile like this:
 
     update-rc.d mountkernfs.sh defaults
     apt-get -y --no-install-recommends offending-package
     update-rc.d -f cgmanager remove
     update-rc.d -f mountkernfs.sh remove
 
-Also, I have blocked systemd from accidentally being installed on the system.
-There are a few packages that pull in systemd shims and so forth, so if
-you get errors about systemd not installing, try adding
+Also, I have blocked systemd from accidentally being installed on the
+system.  There are a few packages that pull in systemd shims and so
+forth, so if you get errors about systemd not installing, try adding
 `rm /etc/apt/preferences.d/systemd` to your Dockerfile.
 
 # Advanced Topic: Adding these enhancements to other images
@@ -208,28 +261,34 @@ the features of debian-base-security to the home-assistant image.
 This works because each image that is part of the chain leading up to
 security (minimal, standard, and security) performs all of its
 activity from scripts it drops -- and leaves -- in
-/usr/local/debian-base-setup.  Those scripts need nothing other than
+`/usr/local/debian-base-setup`.  Those scripts need nothing other than
 the files in the three directories referenced above.  By adding those
 three directories and calling the scripts, it is easy to add these
 features to other images.
-
-# Docker Tags
-
-These tags are pushed:
-
- - latest, stretch: Debian stretch
- - jessie: Debian jessie
- - sid: Debian sid (not tested)
 
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
 can be found at https://github.com/jgoerzen/docker-debian-base
 
+# See Also
+
+Some references to additional information:
+
+ - systemd's
+   [contianer interface documentation](https://www.freedesktop.org/wiki/Software/systemd/ContainerInterface/)
+ - [Article](https://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/)
+   on running systemd in a container.  Highlights some of the reasons
+   to do so: providing a standard Linux API, reaping zombie processes,
+   handling of logging, not having to re-implement init, etc.  All of
+   these have already been implemented in these images with sysvinit
+   and continue with systemd.
+ - 
+
 # Copyright
 
 Docker scripts, etc. are
-Copyright (c) 2017-2018 John Goerzen
+Copyright (c) 2017-2019 John Goerzen
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
