@@ -4,7 +4,7 @@ set -e
 set -x
 
 mv /usr/sbin/policy-rc.d.disabled /usr/sbin/policy-rc.d
-echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
+echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
 # Install python-ndg-httpsclient per #861513
 apt-get update
 update-rc.d mountkernfs.sh defaults
