@@ -33,7 +33,7 @@ Here are the images I provide from this repository:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl, pwgen, zip, unzip
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
-- jgoerzen/debian-base-security - A great way to keep thins updated.  Contains everything above, plus:
+- jgoerzen/debian-base-security - A great way to keep things updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
 - jgoerzen/debian-base-vnc - For systems that need X.  debian-base-security, plus:
