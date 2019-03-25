@@ -1,4 +1,4 @@
-FROM jgoerzen/debian-base-security:buster
+FROM jgoerzen/debian-base-security:sid
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 
 COPY setup/ /usr/local/debian-base-setup/

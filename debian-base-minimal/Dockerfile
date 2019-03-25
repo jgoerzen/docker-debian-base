@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:sid
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 # Concepts from https://github.com/phusion/baseimage-docker
 
