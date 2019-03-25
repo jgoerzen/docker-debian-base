@@ -1,4 +1,4 @@
-FROM jgoerzen/debian-base-security:stretch-systemd
+FROM jgoerzen/debian-base-security:buster
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 
 COPY setup/ /usr/local/debian-base-setup/
