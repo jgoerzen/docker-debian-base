@@ -10,5 +10,5 @@ echo "Starting systemd"
 export container=docker
 
 #exec strace -s 200 -o /tmp/foo -f /bin/systemd --system --default-standard-output=tty --default-standard-error=tty --log-target=console --log-level=debug 100>&1 1>&-
-exec /bin/systemd --system --default-standard-output=tty --default-standard-error=tty --log-target=console --log-level=debug --unit=basic.target 100>&1 1>&-
+exec /bin/systemd --system 100>&1 1>&-
 
