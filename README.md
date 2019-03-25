@@ -21,8 +21,10 @@ rather because sysvinit does not require any kind of privileged Docker
 or cgroups access.
 
 For buster, systemd contains the necessary support for running in an
-unprivileged Docker container and, as it significantly simplifies
-code, is used.
+unprivileged Docker container and, as it doesn't require the hacks
+that sysvinit does, is used there.  The systemd and sysvinit images
+provide an identical set of features and installed software, which
+target the standard Linux API.
 
 Here are the images I provide from this repository:
 
@@ -50,8 +52,15 @@ Memory usage at boot (stretch):
 - jgoerzen/debian-base-standard: 11MB
 - jgoerzen/debian-base-security: 11MB
 
-These images are autobuilt for jessie, stretch, buster, and sid.
-"latest" will track Debian stable, whatever that may be.
+# Docker Tags
+
+These tags are autobuilt:
+
+ - latest: whatever is stable (currently stretch, sysvinit)
+ - buster: Debian buster (systemd)
+ - stretch: Debian stretch (sysvinit)
+ - jessie: Debian jessie (sysvinit)
+ - sid: Debian sid (not tested; systemd)
 
 # Install
 
@@ -173,6 +182,10 @@ Or this (buster/sid):
     systemctl disable ssh
     systemctl enable ssh
 
+(Note, that in the case of ssh, the environment variable will cause
+commands like this to be executed automatically on each container
+start.)
+
 ## Email
 
 email is the main thing you'd need to configure.  In the running system,
@@ -184,40 +197,40 @@ SSH host keys will be generated upon first run of a container, if
 they do not already exist.  This implies every instantiation
 of a container containing SSH will have a new random host key.
 If you want to override this, you can of course supply your own
-files in /etc/ssh or make it a volume.
+files in `/etc/ssh` or make it a volume.
 
 # Advanced topic: programs that depend on disabled scripts (stretch/jessie only)
 
 **This section pertains only to stretch/jessie; systemd in buster/sid
   does not have these issues.**
 
-There are a number of scripts in `/etc/init.d` that are normally
-part of a Debian system initialization, but fail in a Docker environment.
-They do things like set up swap space, mount filesystems, etc.
-Docker images typically leave those scripts in place, but they are
-never called because Docker systems typically don't run a real init
-like these images do.
+There are a number of scripts in `/etc/init.d` that are normally part
+of a Debian system initialization, but fail in a Docker environment.
+They do things like set up swap space, mount filesystems, etc.  Docker
+images typically leave those scripts in place, but they are never
+called because Docker systems typically don't run a real init like
+these images do.
 
-Although calling the scripts produces nothing worse than harmless errors, I have
-disabled those scripts in these images in order to avoid putting useless
-error messages in people's log files.  In some very rare circumstances,
-this may cause installation of additional packages to fail due to
-boot script dependency ordering not working right.  (Again, this is very
-rare).
+Although calling the scripts produces nothing worse than harmless
+errors, I have disabled those scripts in these images in order to
+avoid putting useless error messages in people's log files.  In some
+very rare circumstances, this may cause installation of additional
+packages to fail due to boot script dependency ordering not working
+right.  (Again, this is very rare).
 
-I saw this happen once where a package had a long chain of dependencies
-that wound up pulling in cgmanager, which died in postinst complaining
-that its init script required `mountkernfs`.  I worked around this in my
-Dockerfile like this:
+I saw this happen once where a package had a long chain of
+dependencies that wound up pulling in cgmanager, which died in
+postinst complaining that its init script required `mountkernfs`.  I
+worked around this in my Dockerfile like this:
 
     update-rc.d mountkernfs.sh defaults
     apt-get -y --no-install-recommends offending-package
     update-rc.d -f cgmanager remove
     update-rc.d -f mountkernfs.sh remove
 
-Also, I have blocked systemd from accidentally being installed on the system.
-There are a few packages that pull in systemd shims and so forth, so if
-you get errors about systemd not installing, try adding
+Also, I have blocked systemd from accidentally being installed on the
+system.  There are a few packages that pull in systemd shims and so
+forth, so if you get errors about systemd not installing, try adding
 `rm /etc/apt/preferences.d/systemd` to your Dockerfile.
 
 # Advanced Topic: Adding these enhancements to other images
@@ -253,20 +266,24 @@ the files in the three directories referenced above.  By adding those
 three directories and calling the scripts, it is easy to add these
 features to other images.
 
-# Docker Tags
-
-These tags are pushed:
-
- - latest: whatever is stable (currently stretch)
- - buster: Debian buster (systemd)
- - stretch: Debian stretch (sysvinit)
- - jessie: Debian jessie (sysvinit)
- - sid: Debian sid (not tested; systemd)
-
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
 can be found at https://github.com/jgoerzen/docker-debian-base
+
+# See Also
+
+Some references to additional information:
+
+ - systemd's
+   [contianer interface documentation](https://www.freedesktop.org/wiki/Software/systemd/ContainerInterface/)
+ - [Article](https://developers.redhat.com/blog/2016/09/13/running-systemd-in-a-non-privileged-container/)
+   on running systemd in a container.  Highlights some of the reasons
+   to do so: providing a standard Linux API, reaping zombie processes,
+   handling of logging, not having to re-implement init, etc.  All of
+   these have already been implemented in these images with sysvinit
+   and continue with systemd.
+ - 
 
 # Copyright
 
