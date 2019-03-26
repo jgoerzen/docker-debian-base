@@ -1,8 +1,22 @@
 #!/bin/bash
 
 set -e
-for SUBDIR in debian-base-*; do
-  cp README.perimage.md "$SUBDIR/README.md"
-done
+set -x
 
-git submodule foreach "git commit -m 'Update README.md from docker-debian-base/README.perimage.md' README.md"
+copyreadme () {
+    for SUBDIR in debian-base-*; do
+        cp README.perimage.md "$SUBDIR/README.md"
+    done
+    git submodule foreach "git commit -m 'Update README.md from docker-debian-base/README.perimage.md' README.md"
+}
+
+if [ "$1" = "--allbranches" ]; then
+    for BRANCH in `git branch '--format=%(refname:lstrip=2)'`; do
+        git checkout "$BRANCH"
+        git merge master
+        git submodule update --remote
+        copyreadme
+    done
+else
+    copyreadme
+fi
