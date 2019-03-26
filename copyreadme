@@ -5,7 +5,7 @@ set -x
 
 copyreadme () {
     for SUBDIR in debian-base-*; do
-        cp README.perimage.md "$SUBDIR/README.md"
+        cp README.md "$SUBDIR/README.md"
     done
     git submodule foreach "git commit -m 'Update README.md from docker-debian-base/README.perimage.md' README.md"
 }
