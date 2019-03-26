@@ -1,0 +1,6 @@
+I had to disable the Github webhooks to Docker due to Docker no longer
+supporting building just on dependency triggers and not on Github pushes
+for the images other than -minimal.
+
+Must trigger the -minimal build manually on Docker and then the rest
+will flow.
