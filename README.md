@@ -1,5 +1,9 @@
 # Debian Working System for Docker
 
+This image is part of the
+[docker-debian-base](https://github.com/jgoerzen/docker-debian-base)
+image set.
+
 This is a simple set of images that transform the standard Docker
 Debian environment into one that provides more traditional full
 Unix APIs (including syslog, zombie process collection, etc.)
