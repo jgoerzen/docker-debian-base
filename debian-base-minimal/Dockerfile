@@ -7,6 +7,7 @@ MAINTAINER John Goerzen <jgoerzen@complete.org>
 COPY setup/ /usr/local/debian-base-setup/
 COPY files/ /usr/local/debian-base-setup/files/
 COPY scripts /usr/local/bin
+RUN /usr/local/debian-base-setup/001-debian-base-minimal-jessie
 RUN /usr/local/debian-base-setup/010-debian-base-minimal
 COPY preinit /usr/local/preinit
 
