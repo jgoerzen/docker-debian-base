@@ -59,7 +59,7 @@ These tags are autobuilt:
  - latest: whatever is stable (currently stretch, sysvinit)
  - buster: Debian buster (systemd)
  - stretch: Debian stretch (sysvinit)
- - jessie: Debian jessie (sysvinit)
+ - jessie: Debian jessie (sysvinit) - **no longer supported, may be removed at any time**
  - sid: Debian sid (not tested; systemd)
 
 # Install
@@ -283,7 +283,7 @@ Some references to additional information:
    handling of logging, not having to re-implement init, etc.  All of
    these have already been implemented in these images with sysvinit
    and continue with systemd.
- - 
+ - [serverfault thread](https://serverfault.com/questions/607769/running-systemd-inside-a-docker-container-arch-linux)
 
 # Copyright
 
