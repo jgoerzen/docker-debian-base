@@ -1,4 +1,4 @@
-FROM jgoerzen/debian-base-standard
+FROM jgoerzen/debian-base-standard:stretch
 MAINTAINER John Goerzen <jgoerzen@complete.org>
 
 COPY setup/ /usr/local/debian-base-setup/
