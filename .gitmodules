@@ -2,3 +2,11 @@
 	path = debian-base-apache
 	url = git@github.com:jgoerzen/docker-debian-base-apache.git
 	branch = .
+[submodule "debian-base-minimal"]
+	path = debian-base-minimal
+	url = git@github.com:jgoerzen/docker-debian-base-minimal.git
+	branch = .
+[submodule "debian-base-apache-php"]
+	path = debian-base-apache-php
+	url = git@github.com:jgoerzen/docker-debian-base-apache-php.git
+	branch = .
