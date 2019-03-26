@@ -1,3 +1,10 @@
+# WARNING!
+
+**WARNING: jessie is no longer supported!**
+
+Debian jessie is no longer supported upstream.  This `jessie` branch/tag is no
+longer supported either, and may be removed at any time.  Please stop using it.
+
 # Debian Working System for Docker
 
 This is a simple set of images that transform the standard Docker
