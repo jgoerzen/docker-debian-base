@@ -59,7 +59,7 @@ These tags are autobuilt:
  - latest: whatever is stable (currently stretch, sysvinit)
  - buster: Debian buster (systemd)
  - stretch: Debian stretch (sysvinit)
- - jessie: Debian jessie (sysvinit) - **will be removed once buster is released**
+ - jessie: Debian jessie (sysvinit) - **no longer supported, may be removed at any time**
  - sid: Debian sid (not tested; systemd)
 
 # Install
