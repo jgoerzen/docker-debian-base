@@ -17,6 +17,7 @@ if [ "$1" = "--allbranches" ]; then
         git submodule update --remote
         copyreadme
     done
+    git checkout master
 else
     copyreadme
 fi
