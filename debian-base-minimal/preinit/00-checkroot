@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -e
-echo "Cleaning up; ignore errors here:"
-/etc/init.d/checkroot-bootclean.sh || true
-rm -f /tmp/.clean || true
-
