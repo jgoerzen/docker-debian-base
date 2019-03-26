@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-run-parts --verbose /usr/local/preinit
-
-echo "Starting sysvinit"
-exec /sbin/init 100>&1 1>&-
-
