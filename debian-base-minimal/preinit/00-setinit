@@ -1,4 +1,0 @@
-#!/bin/bash
-# Our shutdown script has to rename this
-#ln -sf init.real /sbin/init
-#mkdir -p /run/systemd/system
