@@ -32,22 +32,22 @@ target the standard Linux API.
 
 Here are the images I provide from this repository:
 
-- jgoerzen/debian-base-minimal - a minimalistic base for you.
+- [jgoerzen/debian-base-minimal](https://github.com/jgoerzen/docker-debian-base-minimal) - a minimalistic base for you.
   - Provides working sysvinit, syslogd, cron, anacron, at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
-- jgoerzen/debian-base-standard - adds some utilities.  Containes everything above, plus:
+- [jgoerzen/debian-base-standard](https://github.com/jgoerzen/docker-debian-base-standard) - adds some utilities.  Containes everything above, plus:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl, pwgen, zip, unzip
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
-- jgoerzen/debian-base-security - A great way to keep things updated.  Contains everything above, plus:
+- [jgoerzen/debian-base-security](https://github.com/jgoerzen/docker-debian-base-security) - A great way to keep things updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
-- jgoerzen/debian-base-vnc - For systems that need X.  debian-base-security, plus:
+- [jgoerzen/debian-base-vnc](https://github.com/jgoerzen/docker-debian-base-vnc) - For systems that need X.  debian-base-security, plus:
   - tightvncserver, xfonts-base, lwm, xterm, xdotool, xvnc4viewer
-- jgoerzen/debian-base-apache - A web server - debian-base-security, plus:
+- [jgoerzen/debian-base-apache](https://github.com/jgoerzen/docker-debian-base-apache) - A web server - debian-base-security, plus:
   - apache2 plus utilities: ssl-cert
   - LetsEncrypt options: certbot, acme-tiny
-- jgoerzen/debian-base-apache-php - debian-base-apache, plus:
+- [jgoerzen/debian-base-apache-php](https://github.com/jgoerzen/docker-debian-base-apache-php) - debian-base-apache, plus:
   - libapache2-mod-php (mod-php5 on jessie)
 
 Memory usage at boot (stretch):

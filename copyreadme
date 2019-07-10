@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+set -x
+
+copyreadme () {
+    # arg $1 is name of branch we're on
+    for SUBDIR in debian-base-*; do
+        cp README.md "$SUBDIR/README.md"
+    done
+    git submodule foreach "git checkout $1; git commit -m 'Update README.md from docker-debian-base/README.perimage.md' README.md"
+}
+
+if [ "$1" = "--allbranches" ]; then
+    for BRANCH in `git branch '--format=%(refname:lstrip=2)'`; do
+        git checkout "$BRANCH"
+        git merge master
+        git submodule update --remote
+        copyreadme "$BRANCH"
+    done
+    git checkout master
+else
+    copyreadme `git branch | grep '\*' | awk '{ print $2 }'`
+fi
