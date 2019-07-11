@@ -42,6 +42,11 @@ Here are the images I provide from this repository:
 - [jgoerzen/debian-base-security](https://github.com/jgoerzen/docker-debian-base-security) - A great way to keep things updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
+  - At container initialization, runs the unattended-upgrade code path to ensure that the
+    system is up-to-date before services are exposed to the Internet.  This addresses an
+    issue wherein security patches may hit security.debian.org before Docker
+    images are refreshed, a fairly common issue with the Docker infrastructure.
+    This behavior can be suppressed with `DEBBASE_NO_STARTUP_APT` (see below).
 - [jgoerzen/debian-base-vnc](https://github.com/jgoerzen/docker-debian-base-vnc) - For systems that need X.  debian-base-security, plus:
   - tightvncserver, xfonts-base, lwm, xterm, xdotool, xvnc4viewer
 - [jgoerzen/debian-base-apache](https://github.com/jgoerzen/docker-debian-base-apache) - A web server - debian-base-security, plus:
@@ -88,8 +93,17 @@ also the section on environment variables, below.
 ## Container Invocation, systemd containers (buster/sid)
 
     docker run -td --stop-signal=SIGRTMIN+3 \ 
+      --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
       -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
       --name=name jgoerzen/debian-base-whatever
+
+The `/run` and `/run/lock` tmpfs are required by systemd.  The 100M
+sets a maximum size, not a default allocation, and serves to limit the
+amount of RAM an errant process could cause the system to consume,
+down from a default limit of 16G.
+
+Note that these images, contrary to many others out there, do NOT
+require `--privileged`.
 
 # Environment Variables
 
@@ -108,6 +122,8 @@ This environment variable is available for your use:
   for instance, `America/Denver`.
 - `DEBBASE_SSH` defaults to `disabled`.  If you set to `enabled`, then the SSH server
   will be run.
+- `DEBBASE_NO_STARTUP_APT` defaults to empty.  If set, it will cause images based
+  on debian-base-security to skip the apt job run at container startup.
 
 # Container initialization
 
