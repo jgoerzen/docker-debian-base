@@ -5,7 +5,7 @@ set -x
 
 pushbranch () {
     # arg $1 is name of branch we're on
-    git push origin "HEAD:$1"
+    git submodule foreach "git push origin HEAD:$1"
 }
 
 if [ "$1" = "--allbranches" ]; then
