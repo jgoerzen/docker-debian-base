@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -x
+
+pushbranch () {
+    # arg $1 is name of branch we're on
+    git submodule foreach "git push origin HEAD:$1 && git checkout $1 && git merge origin/$1"
+}
+
+if [ "$1" = "--allbranches" ]; then
+    for BRANCH in `git branch '--format=%(refname:lstrip=2)'`; do
+        pushbranch "$BRANCH"
+    done
+else
+    pushbranch `git branch | grep '\*' | awk '{ print $2 }'`
+fi
