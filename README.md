@@ -92,7 +92,7 @@ also the section on environment variables, below.
 
 ## Container Invocation, systemd containers (buster/sid)
 
-    docker run -td --stop-signal=SIGRTMIN+3 \ 
+    docker run -td --stop-signal=SIGRTMIN+3 \
       --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
       -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
       --name=name jgoerzen/debian-base-whatever
