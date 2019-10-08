@@ -10,7 +10,7 @@ Unix APIs (including syslog, zombie process collection, etc.)
 
 Despite this, they are all very small, both in terms of disk and RAM usage.
 
-You can find a [description of the motivation for these images](http://changelog.complete.org/archives/9794-fixing-the-problems-with-docker-images) on my blog.
+You can find a [description of the motivation for these images](https://changelog.complete.org/archives/9794-fixing-the-problems-with-docker-images) on my blog.
 
 This is loosely based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
