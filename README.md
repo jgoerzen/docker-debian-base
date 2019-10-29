@@ -33,7 +33,7 @@ target the standard Linux API.
 Here are the images I provide from this repository:
 
 - [jgoerzen/debian-base-minimal](https://github.com/jgoerzen/docker-debian-base-minimal) - a minimalistic base for you.
-  - Provides working sysvinit, syslogd, cron, anacron, at, and logrotate.
+  - Provides working sysvinit/systemd, syslogd, cron, anacron, at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
 - [jgoerzen/debian-base-standard](https://github.com/jgoerzen/docker-debian-base-standard) - adds some utilities.  Containes everything above, plus:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl, pwgen, zip, unzip
@@ -65,7 +65,7 @@ Memory usage at boot (stretch):
 
 These tags are autobuilt:
 
- - latest: whatever is stable (currently stretch, sysvinit)
+ - latest: whatever is stable (currently buster, systemd)
  - buster: Debian buster (systemd)
  - stretch: Debian stretch (sysvinit) - **no longer supported, may be removed at any time**
  - jessie: Debian jessie (sysvinit) - **no longer supported, may be removed at any time**
