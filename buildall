@@ -3,15 +3,15 @@ set -e
 set -x
 
 buildbranch() {
-        git checkout $1
         for DIR in debian-base-{minimal,standard,security,vnc,apache,apache-php}; do
                 cd $DIR
+                git checkout $1
                 docker build -t jgoerzen/$DIR:$2 .
                 cd ..
         done
 }
 
 buildbranch master latest
-buildbranch jessie jessie
-git checkout master
+#buildbranch jessie jessie
+#git checkout master
 
