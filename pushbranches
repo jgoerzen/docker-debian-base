@@ -13,5 +13,6 @@ if [ "$1" = "--allbranches" ]; then
         pushbranch "$BRANCH"
     done
 else
-    pushbranch `git branch | grep '\*' | awk '{ print $2 }'`
+    #pushbranch `git branch | grep '\*' | awk '{ print $2 }'`
+    git submodule foreach "git push"
 fi
