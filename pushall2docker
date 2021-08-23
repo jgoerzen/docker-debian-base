@@ -6,8 +6,8 @@ buildbranch() {
         for DIR in debian-base-{minimal,standard,security,vnc,apache,apache-php}; do
                 cd $DIR
                 git checkout $1
-                docker build -t jgoerzen/$DIR:$2 .
-                docker tag jgoerzen/$DIR:$2 jgoerzen/$DIR:$3
+                docker push jgoerzen/$DIR:$2
+                docker push jgoerzen/$DIR:$3
                 cd ..
         done
 }
