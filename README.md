@@ -87,7 +87,7 @@ When running, use `-t` to enable the logging to `docker logs`
 A container should be started using these commands, among others.  See
 also the section on environment variables, below.
 
-## Container Invocation, systemd containers (buster/bullseye/sis)
+## Container Invocation, systemd containers (buster/bullseye/sid)
 
 Here's how you invoke for systemd (buster/bullseye) on a system running an older systemd on the host, with cgroups v1:
 
