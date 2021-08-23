@@ -87,16 +87,23 @@ When running, use `-t` to enable the logging to `docker logs`
 A container should be started using these commands, among others.  See
 also the section on environment variables, below.
 
-## Container Invocation, sysvinit containers (jessie/stretch)
+## Container Invocation, systemd containers (buster/bullseye/sis)
 
-    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
-
-## Container Invocation, systemd containers (buster/bullseye/sid)
+Here's how you invoke for systemd (buster/bullseye) on a system running an older systemd on the host, with cgroups v1:
 
     docker run -td --stop-signal=SIGRTMIN+3 \
       --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
       -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
       --name=name jgoerzen/debian-base-whatever
+      
+For a host running bullseye, or a newer cgroups and systemd, you have to use this:
+
+    docker run -td --stop-signal=SIGRTMIN+3 \
+      --tmpfs /run:size=100M --tmpfs /run/lock:size=100M \
+      -v /sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host \
+      --name=name jgoerzen/debian-base-whatever
+
+Note that the buster image has not been tested under these situations, and since bullseye is now stable, it is the recommended image for all modern deployments.
 
 The `/run` and `/run/lock` tmpfs are required by systemd.  The 100M
 sets a maximum size, not a default allocation, and serves to limit the
@@ -105,6 +112,19 @@ down from a default limit of 16G.
 
 Note that these images, contrary to many others out there, do NOT
 require `--privileged`.
+
+For more information about the systemd/cgroups situation, consult these links
+
+- https://github.com/systemd/systemd/issues/19245
+- https://github.com/containers/podman/issues/5153
+- https://github.com/moby/moby/issues/42275
+- https://serverfault.com/questions/1053187/systemd-fails-to-run-in-a-docker-container-when-using-cgroupv2-cgroupns-priva/1054414#1054414
+- http://docs.podman.io/en/latest/markdown/podman-run.1.html#cgroupns-mode
+- 
+
+## Container Invocation, sysvinit containers (jessie/stretch)
+
+    docker run -td --stop-signal=SIGPWR --name=name jgoerzen/debian-base-whatever
 
 # Environment Variables
 
