@@ -1,7 +1,9 @@
 # Debian Working System for Docker
 
+**NOTE: Github is no longer the home for this project; see the [new home on Salsa](https://salsa.debian.org/jgoerzen/docker-debian-base)**.
+
 This image is part of the
-[docker-debian-base](https://github.com/jgoerzen/docker-debian-base)
+[docker-debian-base](https://salsa.debian.org/jgoerzen/docker-debian-base)
 image set.
 
 This is a simple set of images that transform the standard Docker
@@ -16,7 +18,7 @@ This is loosely based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
 You can look at that link for additional discussion on the motivations.
 
-You can find the source and documentation at the [Github page](https://github.com/jgoerzen/docker-debian-base)
+You can find the source and documentation at the [Github page](https://salsa.debian.org/jgoerzen/docker-debian-base)
 and automatic builds are available from [my Docker hub page](https://hub.docker.com/u/jgoerzen/).
 
 **OUDATED**: For stretch and jessie, this image uses sysvinit instead of systemd,
@@ -32,14 +34,14 @@ target the standard Linux API.
 
 Here are the images I provide from this repository:
 
-- [jgoerzen/debian-base-minimal](https://github.com/jgoerzen/docker-debian-base-minimal) - a minimalistic base for you.
+- [jgoerzen/debian-base-minimal](https://salsa.debian.org/jgoerzen/docker-debian-base-minimal) - a minimalistic base for you.
   - Provides working sysvinit/systemd, syslogd, cron, anacron, at, and logrotate.
   - syslogd is configured to output to the docker log system by default.
-- [jgoerzen/debian-base-standard](https://github.com/jgoerzen/docker-debian-base-standard) - adds some utilities.  Containes everything above, plus:
+- [jgoerzen/debian-base-standard](https://salsa.debian.org/jgoerzen/docker-debian-base-standard) - adds some utilities.  Containes everything above, plus:
   - Utilities: less, nano, vim-tiny, man-db (for viewing manpages), net-tools, wget, curl, pwgen, zip, unzip
   - Email: exim4-daemon-light, mailx
   - Network: netcat-openbsd, socat, openssl, ssh, telnet (client)
-- [jgoerzen/debian-base-security](https://github.com/jgoerzen/docker-debian-base-security) - A great way to keep things updated.  Contains everything above, plus:
+- [jgoerzen/debian-base-security](https://salsa.debian.org/jgoerzen/docker-debian-base-security) - A great way to keep things updated.  Contains everything above, plus:
   - automated security patches using unattended-upgrades and needrestart
   - debian-security-support
   - At container initialization, runs the unattended-upgrade code path to ensure that the
@@ -47,12 +49,12 @@ Here are the images I provide from this repository:
     issue wherein security patches may hit security.debian.org before Docker
     images are refreshed, a fairly common issue with the Docker infrastructure.
     This behavior can be suppressed with `DEBBASE_NO_STARTUP_APT` (see below).
-- [jgoerzen/debian-base-vnc](https://github.com/jgoerzen/docker-debian-base-vnc) - For systems that need X.  debian-base-security, plus:
+- [jgoerzen/debian-base-vnc](https://salsa.debian.org/jgoerzen/docker-debian-base-vnc) - For systems that need X.  debian-base-security, plus:
   - tightvncserver, xfonts-base, lwm, xterm, xdotool, xvnc4viewer
-- [jgoerzen/debian-base-apache](https://github.com/jgoerzen/docker-debian-base-apache) - A web server - debian-base-security, plus:
+- [jgoerzen/debian-base-apache](https://salsa.debian.org/jgoerzen/docker-debian-base-apache) - A web server - debian-base-security, plus:
   - apache2 plus utilities: ssl-cert
   - LetsEncrypt options: certbot, acme-tiny
-- [jgoerzen/debian-base-apache-php](https://github.com/jgoerzen/docker-debian-base-apache-php) - debian-base-apache, plus:
+- [jgoerzen/debian-base-apache-php](https://salsa.debian.org/jgoerzen/docker-debian-base-apache-php) - debian-base-apache, plus:
   - libapache2-mod-php (mod-php5 on jessie)
 
 Memory usage at boot (stretch):
@@ -310,7 +312,7 @@ features to other images.
 # Source
 
 This is prepared by John Goerzen <jgoerzen@complete.org> and the source
-can be found at https://github.com/jgoerzen/docker-debian-base
+can be found at https://salsa.debian.org/jgoerzen/docker-debian-base
 
 # See Also
 
