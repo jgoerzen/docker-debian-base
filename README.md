@@ -18,7 +18,7 @@ This is loosely based on the concepts, but not the code, in the
 [phusion baseimage-docker](https://github.com/phusion/baseimage-docker).
 You can look at that link for additional discussion on the motivations.
 
-You can find the source and documentation at the [Github page](https://salsa.debian.org/jgoerzen/docker-debian-base)
+You can find the source and documentation at the [Salsa page](https://salsa.debian.org/jgoerzen/docker-debian-base)
 and automatic builds are available from [my Docker hub page](https://hub.docker.com/u/jgoerzen/).
 
 **OUDATED**: For stretch and jessie, this image uses sysvinit instead of systemd,
