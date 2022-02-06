@@ -1,13 +1,9 @@
 docker-build-master:
   # Official docker image.
-  image: docker:latest
-  stage: build
-  services:
-    - docker:dind
   before_script:
+    - docker info
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - apk add git
     - git submodule init
     - git submodule update
     - ./buildall
