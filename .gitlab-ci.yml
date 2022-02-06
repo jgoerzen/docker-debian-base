@@ -15,5 +15,8 @@ docker-build-master:
     - ./buildall
     - ./pushall2docker
     - "curl -X POST -F token=$CI_DOCKER_NNCP_TRIGGER -F ref=main https://salsa.debian.org/api/v4/projects/67697/trigger/pipeline"
+    - "curl -X POST -F token=$CI_DOCKER_APACHE_PROXY_TRIGGER -F ref=master https://salsa.debian.org/api/v4/projects/67698/trigger/pipeline"
+    - "curl -X POST -F token=$CI_DOCKER_TOR_TRIGGER -F ref=master https://salsa.debian.org/api/v4/projects/67701/trigger/pipeline"
+ 
   only:
     - master
