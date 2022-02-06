@@ -19,7 +19,7 @@ This is loosely based on the concepts, but not the code, in the
 You can look at that link for additional discussion on the motivations.
 
 You can find the source and documentation at the [Salsa page](https://salsa.debian.org/jgoerzen/docker-debian-base)
-and automatic builds are available from [my Docker hub page](https://hub.docker.com/u/jgoerzen/).
+and automatic builds are available from [my Docker hub page](https://hub.docker.com/u/jgoerzen/).  The builds are auto-generated from Salsa CI and run at least weekly.
 
 **OUDATED**: For stretch and jessie, this image uses sysvinit instead of systemd,
 not because of any particular opinion on the merits of them, but

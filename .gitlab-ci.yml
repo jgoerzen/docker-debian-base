@@ -13,5 +13,6 @@ docker-build-master:
     - git submodule update
     - ./buildall
     - ./pushall2docker
+    - "curl -X POST -F token=$CI_DOCKER_NNCP_TRIGGER -F ref=main https://salsa.debian.org/api/v4/projects/67697/trigger/pipeline"
   only:
     - master
