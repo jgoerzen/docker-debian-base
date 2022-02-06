@@ -1,24 +1,24 @@
 [submodule "debian-base-apache"]
 	path = debian-base-apache
-	url = git@github.com:jgoerzen/docker-debian-base-apache.git
+	url = https://github.com/jgoerzen/docker-debian-base-apache.git
 	branch = .
 [submodule "debian-base-minimal"]
 	path = debian-base-minimal
-	url = git@github.com:jgoerzen/docker-debian-base-minimal.git
+	url = https://github.com/jgoerzen/docker-debian-base-minimal.git
 	branch = .
 [submodule "debian-base-apache-php"]
 	path = debian-base-apache-php
-	url = git@github.com:jgoerzen/docker-debian-base-apache-php.git
+	url = https://github.com/jgoerzen/docker-debian-base-apache-php.git
 	branch = .
 [submodule "debian-base-vnc"]
 	path = debian-base-vnc
-	url = git@github.com:jgoerzen/docker-debian-base-vnc.git
+	url = https://github.com/jgoerzen/docker-debian-base-vnc.git
 	branch = .
 [submodule "debian-base-standard"]
 	path = debian-base-standard
-	url = git@github.com:jgoerzen/docker-debian-base-standard.git
+	url = https://github.com/jgoerzen/docker-debian-base-standard.git
 	branch = .
 [submodule "debian-base-security"]
 	path = debian-base-security
-	url = git@github.com:jgoerzen/docker-debian-base-security.git
+	url = https://github.com/jgoerzen/docker-debian-base-security.git
 	branch = .
