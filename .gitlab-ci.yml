@@ -21,6 +21,7 @@ docker-build-master:
     - "curl -X POST -F token=$CI_DOCKER_TOR_TRIGGER -F ref=master https://salsa.debian.org/api/v4/projects/67701/trigger/pipeline"
     - "curl -X POST -F token=$CI_DOCKER_AMPACHE_TRIGGER -F ref=master https://salsa.debian.org/api/v4/projects/67750/trigger/pipeline"
     - "curl -X POST -F token=$CI_DOCKER_WEEWX_TRIGGER -F ref=master https://salsa.debian.org/api/v4/projects/67751/trigger/pipeline"
+    - "curl -X POST -F token=$CI_DOCKER_UUCP_TRIGGER -F ref=master https://salsa.debian.org/api/v4/projects/67766/trigger/pipeline"
  
   only:
     - master
