@@ -12,7 +12,7 @@ buildbranch() {
         done
 }
 
-buildbranch master latest bullseye
+buildbranch bullseye bullseye
 #buildbranch jessie jessie
 #git checkout master
 
